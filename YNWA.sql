@@ -2,10 +2,15 @@
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
+select * from prc_modelos;
+
+
+
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 #select * from sec_usuarios
-
+#select * from prc_clientes
+#delete from sec_usuarios where id_usuario=3
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,

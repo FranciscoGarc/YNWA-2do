@@ -21,6 +21,9 @@ INPUTSEARCH = document.getElementById('inputsearch'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
 
+    const mensajeDiv = document.getElementById('mensajeDiv'),
+    IDGUARDAR = document.getElementById('idGuardar');
+
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -98,6 +101,21 @@ INPUTSEARCH.addEventListener('input', async function ()  {
         ROWS_FOUND.textContent = DATA.message;
     } else {
        // sweetAlert(4, DATA.error, true);
+    }
+});
+ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
+    const FORM = new FormData();
+    FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status === 1) {
+        mensajeDiv.textContent = 'Ya existe el usuario';
+        mensajeDiv.style.display = 'block'; 
+        IDGUARDAR.disabled = true;
+    } else {
+        mensajeDiv.textContent = "";
+        IDGUARDAR.disabled = false;
     }
 });
 /*
@@ -189,6 +207,7 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
+        fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
     } else {
         sweetAlert(2, DATA.error, false);
     }
